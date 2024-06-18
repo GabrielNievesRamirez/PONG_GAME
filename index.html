@@ -44,15 +44,15 @@
             top: 40px;
         }
 
-        .marcador-jugador1 {
+        .marcador:first-child {
             left: 100px;
         }
 
-        .marcador-jugador2 {
+        .marcador:last-child {
             right: 100px;
         }
 
-        .pala  {
+        .pala {
             width: 14px;
             height: 100px;
             background: white;
@@ -99,8 +99,8 @@
 
     <!-- Escenario del juego -->
     <div class="escenario">
-        <div class="marcador marcador-jugador1">0</div>
-        <div class="marcador marcador-jugador2">0</div>
+        <div class="marcador">0</div>
+        <div class="marcador">0</div>
         <div class="pala pala1"></div>
         <div class="pala pala2"></div>
         <div class="red"></div>
@@ -131,10 +131,10 @@
 
             GetBordes() {
                 return {
-                    minX: this.x - this.ancho/2,
-                    maxX: this.x + this.ancho/2,
-                    minY: this.y - this.alto/2,
-                    maxY: this.y + this.alto/2
+                    minX: this.x - this.ancho / 2,
+                    maxX: this.x + this.ancho / 2,
+                    minY: this.y - this.alto / 2,
+                    maxY: this.y + this.alto / 2
                 };
             }
 
@@ -161,9 +161,9 @@
             }
 
             ComprobarRebote() {
-                if (this.y + this.alto/2 > this.bordesTablero.maxY && this.dirY > 0) {
+                if (this.y + this.alto / 2 > this.bordesTablero.maxY && this.dirY > 0) {
                     this.RebotarY();
-                } else if (this.y - this.alto/2 < this.bordesTablero.minY && this.dirY < 0) {
+                } else if (this.y - this.alto / 2 < this.bordesTablero.minY && this.dirY < 0) {
                     this.RebotarY();
                 }
             }
@@ -178,9 +178,9 @@
             }
 
             ComprobarGol() {
-                if (this.x - this.ancho/2 < this.bordesTablero.minX) {
+                if (this.x - this.ancho / 2 < this.bordesTablero.minX) {
                     return 2;
-                } else if (this.x + this.ancho/2 > this.bordesTablero.maxX) {
+                } else if (this.x + this.ancho / 2 > this.bordesTablero.maxX) {
                     return 1;
                 }
                 return 0;
@@ -226,11 +226,11 @@
 
             Mover() {
                 this.y += this.velActual * deltaTime;
-                if (this.y + this.alto/2 > this.bordesTablero.maxY) {
-                    this.y = this.bordesTablero.maxY - this.alto/2;
+                if (this.y + this.alto / 2 > this.bordesTablero.maxY) {
+                    this.y = this.bordesTablero.maxY - this.alto / 2;
                 }
-                if (this.y - this.alto/2 < this.bordesTablero.minY) {
-                    this.y = this.alto/2;
+                if (this.y - this.alto / 2 < this.bordesTablero.minY) {
+                    this.y = this.alto / 2;
                 }
                 this.elem.style.bottom = this.y + "px";
             }
@@ -274,8 +274,9 @@
         var pelota = new Pelota(bordesTablero, document.querySelector(".pelota"), 300, Math.cos(dir), Math.sin(dir), 0.1);
         var pala1 = new Pala(bordesTablero, document.querySelector(".pala1"), 300, 1.3, "w", "s");
         var pala2 = new Pala(bordesTablero, document.querySelector(".pala2"), 300, 1.3, "ArrowUp", "ArrowDown");
-        var marcador1 = new Marcador(document.querySelector(".marcador-jugador1"));
-        var marcador2 = new Marcador(document.querySelector(".marcador-jugador2"));
+        var marcadores = document.querySelectorAll(".marcador");
+        var marcador1 = new Marcador(marcadores[0]);
+        var marcador2 = new Marcador(marcadores[1]);
         var deltaTime = 0;
 
         function IniciarJuego() {
@@ -299,8 +300,8 @@
                 pelota.Mover();
                 pala1.Frenar();
                 pala2.Frenar();
-                if(pelota.ComprobarGol() != 0) {
-                    if(pelota.ComprobarGol() == 1) {
+                if (pelota.ComprobarGol() != 0) {
+                    if (pelota.ComprobarGol() == 1) {
                         marcador1.GanarPunto();
                     } else {
                         marcador2.GanarPunto();
@@ -309,7 +310,7 @@
                     pala2.Resetear();
                     dir = Math.random() * 2 * Math.PI;
                     pelota.Resetear(300, 400, 300, Math.cos(dir), Math.sin(dir));
-                } else if(pala1.ComprobarColision(pelota.GetBordes()) || pala2.ComprobarColision(pelota.GetBordes())) {
+                } else if (pala1.ComprobarColision(pelota.GetBordes()) || pala2.ComprobarColision(pelota.GetBordes())) {
                     var inerciaY = pala1.ComprobarColision(pelota.GetBordes()) ? pala1.velActual : pala2.velActual;
                     pelota.RebotarX(inerciaY);
                 }
