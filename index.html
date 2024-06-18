@@ -44,11 +44,11 @@
             top: 40px;
         }
 
-        .marcador1 {
+        .marcador-jugador1 {
             left: 100px;
         }
 
-        .marcador2 {
+        .marcador-jugador2 {
             right: 100px;
         }
 
@@ -99,8 +99,8 @@
 
     <!-- Escenario del juego -->
     <div class="escenario">
-        <div class="marcador marcador1">0</div>
-        <div class="marcador marcador2">0</div>
+        <div class="marcador marcador-jugador1">0</div>
+        <div class="marcador marcador-jugador2">0</div>
         <div class="pala pala1"></div>
         <div class="pala pala2"></div>
         <div class="red"></div>
@@ -274,8 +274,8 @@
         var pelota = new Pelota(bordesTablero, document.querySelector(".pelota"), 300, Math.cos(dir), Math.sin(dir), 0.1);
         var pala1 = new Pala(bordesTablero, document.querySelector(".pala1"), 300, 1.3, "w", "s");
         var pala2 = new Pala(bordesTablero, document.querySelector(".pala2"), 300, 1.3, "ArrowUp", "ArrowDown");
-        var marcador1 = new Marcador(document.querySelector(".marcador1"));
-        var marcador2 = new Marcador(document.querySelector(".marcador2"));
+        var marcador1 = new Marcador(document.querySelector(".marcador-jugador1"));
+        var marcador2 = new Marcador(document.querySelector(".marcador-jugador2"));
         var deltaTime = 0;
 
         function IniciarJuego() {
